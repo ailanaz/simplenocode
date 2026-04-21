@@ -29,10 +29,10 @@ const snippets = [
   top: 0;
   width: 26px;
   height: 26px;
-  border: 1.5px solid #ff7a86;
+  border: 1.5px solid #7dff9b;
   border-radius: 999px;
-  background: rgba(255, 122, 134, 0.18);
-  box-shadow: 0 0 28px rgba(255, 122, 134, 0.35);
+  background: rgba(125, 255, 155, 0.18);
+  box-shadow: 0 0 28px rgba(125, 255, 155, 0.35);
   pointer-events: none;
   z-index: 9999;
   transform: translate(-50%, -50%);
@@ -42,7 +42,7 @@ const snippets = [
 .snc-cursor.is-hover {
   width: 44px;
   height: 44px;
-  background: rgba(255, 122, 134, 0.28);
+  background: rgba(125, 255, 155, 0.28);
 }
 
 html,
@@ -89,7 +89,7 @@ document.querySelectorAll("a, button, [data-cursor-hover]").forEach((element) =>
     type: "buttons",
     demo: "./snippets/hover-buttons/demo.html",
     thumb: "",
-    summary: "A polished CTA with lift, glow, and a soft neon red finish.",
+    summary: "A polished CTA with lift, glow, and a soft neon green finish.",
     description: "This is a good default call-to-action when the rest of the page is already simple and you want the main button to carry more visual energy.",
     bestFor: "Primary CTAs, signup prompts, buy buttons, launch pages, and form submissions.",
     usage: [
@@ -107,18 +107,18 @@ document.querySelectorAll("a, button, [data-cursor-hover]").forEach((element) =>
   border: 0;
   border-radius: 14px;
   padding: 1rem 1.5rem;
-  background: linear-gradient(135deg, #ff7a86, #ff5d6d);
+  background: linear-gradient(135deg, #7dff9b, #35d67b);
   color: #ffffff;
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.02em;
-  box-shadow: 0 0 24px rgba(255, 122, 134, 0.28);
+  box-shadow: 0 0 24px rgba(125, 255, 155, 0.28);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .snc-glow-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 36px rgba(255, 122, 134, 0.42);
+  box-shadow: 0 0 36px rgba(125, 255, 155, 0.42);
 }
 </style>
 
@@ -130,7 +130,7 @@ document.querySelectorAll("a, button, [data-cursor-hover]").forEach((element) =>
     type: "loaders",
     demo: "./snippets/loading-spinner/demo.html",
     thumb: "",
-    summary: "A minimal loader with a red accent ring and a calm loading state.",
+    summary: "A minimal loader with a green accent ring and a calm loading state.",
     description: "This is the kind of snippet you can drop into wait states without making the page feel broken or too empty. It works well in low-code and embed-heavy builds.",
     bestFor: "Form submits, API waits, embeds, dashboard placeholders, and content hydration states.",
     usage: [
@@ -157,7 +157,7 @@ document.querySelectorAll("a, button, [data-cursor-hover]").forEach((element) =>
   height: 50px;
   border-radius: 999px;
   border: 4px solid rgba(255, 255, 255, 0.12);
-  border-top-color: #ff7a86;
+  border-top-color: #7dff9b;
   animation: snc-spin 1s linear infinite;
 }
 
@@ -227,7 +227,7 @@ document.querySelectorAll("a, button, [data-cursor-hover]").forEach((element) =>
   font-size: clamp(1rem, 2vw, 1.4rem);
   font-weight: 700;
   letter-spacing: 0.12em;
-  color: #ff7a86;
+  color: #7dff9b;
 }
 
 @keyframes snc-marquee {
@@ -274,7 +274,7 @@ document.querySelectorAll("a, button, [data-cursor-hover]").forEach((element) =>
   border: 0;
   border-radius: 14px;
   padding: 0.95rem 1.35rem;
-  background: linear-gradient(135deg, #ff7a86, #ff5d6d);
+  background: linear-gradient(135deg, #7dff9b, #35d67b);
   color: #ffffff;
   font-weight: 700;
 }
@@ -386,14 +386,14 @@ sncModal.addEventListener("click", (event) => {
 
 .snc-parallax-bg[data-speed="0.28"] {
   background:
-    radial-gradient(circle at 30% 35%, rgba(255, 122, 134, 0.5), transparent 28%),
+    radial-gradient(circle at 30% 35%, rgba(125, 255, 155, 0.5), transparent 28%),
     linear-gradient(135deg, #151927, #090b11);
 }
 
 .snc-parallax-bg[data-speed="0.14"] {
   background:
     radial-gradient(circle at 70% 45%, rgba(255, 255, 255, 0.12), transparent 24%),
-    radial-gradient(circle at 60% 70%, rgba(255, 122, 134, 0.16), transparent 22%);
+    radial-gradient(circle at 60% 70%, rgba(125, 255, 155, 0.16), transparent 22%);
   mix-blend-mode: screen;
 }
 
@@ -424,7 +424,7 @@ sncModal.addEventListener("click", (event) => {
   <div class="snc-parallax-bg" data-speed="0.14"></div>
   <div class="snc-parallax-copy">
     <p>Scroll the page</p>
-    <h2>Soft red depth</h2>
+    <h2>Soft green depth</h2>
   </div>
 </section>
 
@@ -527,10 +527,10 @@ sncObserver.observe(sncReveal);
   height: 52px;
   border: 0;
   border-radius: 999px;
-  background: linear-gradient(135deg, #ff7a86, #ff5d6d);
+  background: linear-gradient(135deg, #7dff9b, #35d67b);
   color: #ffffff;
   font-size: 1.1rem;
-  box-shadow: 0 0 30px rgba(255, 122, 134, 0.35);
+  box-shadow: 0 0 30px rgba(125, 255, 155, 0.35);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.25s ease, transform 0.25s ease;
