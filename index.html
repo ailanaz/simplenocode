@@ -1,1 +1,38 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SimpleNoCode — Copy-Paste UI for Non-Coders</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, sans-serif; background: #0a0a0a; color: #fff; line-height: 1.6; }
+    .hero { text-align: center; padding: 5rem 1rem; }
+    h1 { font-size: 3rem; margin-bottom: 1rem; }
+    h1 span { background: linear-gradient(135deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    p { color: #666; font-size: 1.1rem; }
+    .snippets { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; max-width: 1000px; margin: 2rem auto; padding: 1rem; }
+    .card { background: #141414; border: 1px solid #222; border-radius: 12px; padding: 1.5rem; text-decoration: none; color: inherit; display: block; transition: transform 0.2s; }
+    .card:hover { transform: translateY(-4px); border-color: #333; }
+    .card h3 { margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+    .card p { color: #666; font-size: 0.9rem; }
+    .tag { font-size: 0.7rem; background: #3b82f6; padding: 0.2rem 0.5rem; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <h1>Copy-paste UI for <span>non-coders</span></h1>
+    <p>Add polished effects to your website in seconds. No code required.</p>
+  </section>
+  <section class="snippets">
+    <a href="snippets/cursor-follower/demo.html" class="card"><h3>Cursor Follower <span class="tag">Cursor</span></h3><p>Circle that trails behind your cursor</p></a>
+    <a href="snippets/text-reveal/demo.html" class="card"><h3>Text Reveal <span class="tag">Text</span></h3><p>Elements fade in when scrolling</p></a>
+    <a href="snippets/marquee-text/demo.html" class="card"><h3>Marquee Text <span class="tag">Text</span></h3><p>Horizontal scrolling text</p></a>
+    <a href="snippets/hover-buttons/demo.html" class="card"><h3>Hover Buttons <span class="tag">Buttons</span></h3><p>Polished button effects</p></a>
+    <a href="snippets/loading-spinner/demo.html" class="card"><h3>Loading Spinner <span class="tag">Loaders</span></h3><p>Smooth animated spinner</p></a>
+    <a href="snippets/parallax-scroll/demo.html" class="card"><h3>Parallax Scroll <span class="tag">Scroll</span></h3><p>Background moves slower</p></a>
+    <a href="snippets/modal-popup/demo.html" class="card"><h3>Modal Popup <span class="tag">UI</span></h3><p>Pop-up dialog box</p></a>
+    <a href="snippets/scroll-to-top/demo.html" class="card"><h3>Scroll to Top <span class="tag">UI</span></h3><p>Button to scroll up</p></a>
+  </section>
+</body>
+</html>
