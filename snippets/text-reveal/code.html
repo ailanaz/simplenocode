@@ -1,0 +1,31 @@
+<!-- ADD TO YOUR <style> -->
+<style>
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+
+
+<!-- ADD THIS CLASS TO ELEMENTS YOU WANT TO ANIMATE -->
+<div class="reveal">Your text here</div>
+
+
+<!-- ADD TO YOUR <script> -->
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
