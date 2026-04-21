@@ -537,6 +537,9 @@ a {
   overflow: hidden;
   z-index: 30;
   transition: height 0.3s ease;
+  background: #0d1117;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .map-float.collapsed {
@@ -574,9 +577,7 @@ a {
   overflow: hidden;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.06);
-  background:
-    radial-gradient(circle at top left, rgba(40, 255, 13, 0.12), transparent 45%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  background: #11161d;
 }
 
 .rotation-copy {
