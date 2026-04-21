@@ -578,6 +578,7 @@ const state = {
 const elements = {
   snippetCount: document.getElementById("snippetCount"),
   randomSnippetBtn: document.getElementById("randomSnippetBtn"),
+  previewSection: document.getElementById("previewSection"),
   previewFrame: document.getElementById("previewFrame"),
   reloadPreviewBtn: document.getElementById("reloadPreviewBtn"),
   heroTypeBadge: document.getElementById("heroTypeBadge"),
@@ -706,8 +707,8 @@ function renderCards() {
     loadButton.addEventListener("click", (event) => {
       event.stopPropagation();
       selectSnippet(snippet.id);
-      if (window.innerWidth < 900) {
-        document.querySelector(".hero").scrollIntoView({ behavior: "smooth", block: "start" });
+      if (window.innerWidth < 900 && elements.previewSection) {
+        elements.previewSection.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     });
 
@@ -876,8 +877,8 @@ function bindEvents() {
     }
 
     selectSnippet(snippet.id);
-    if (window.innerWidth < 900) {
-      document.querySelector(".hero").scrollIntoView({ behavior: "smooth", block: "start" });
+    if (window.innerWidth < 900 && elements.previewSection) {
+      elements.previewSection.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   });
   elements.mapFloatHeader.addEventListener("click", toggleRotationPanel);
