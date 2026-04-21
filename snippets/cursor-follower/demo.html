@@ -1,1 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cursor Follower — SimpleNoCode</title>
+  <link rel="stylesheet" href="../../styles.css">
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: sans-serif;
+      cursor: none;
+    }
+    
+    .cursor {
+      width: 30px;
+      height: 30px;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease-out, width 0.2s, height 0.2s, background 0.2s;
+      mix-blend-mode: difference;
+    }
+    
+    .cursor.hover {
+      width: 50px;
+      height: 50px;
+      background: rgba(255,255,255,0.15);
+    }
+    
+    h1 { color: #fff; font-size: 2rem; }
+    p { color: #888; }
+    
+    .hover-target {
+      cursor: none;
+      padding: 1.5rem 3rem;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 12px;
+      color: #fff;
+      font-size: 1.1rem;
+      transition: all 0.2s;
+    }
+    
+    .hover-target:hover {
+      background: #222;
+      border-color: #444;
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor" id="cursor"></div>
+  
+  <div style="text-align: center;">
+    <h1>Move your cursor</h1>
+    <p>The circle follows with a smooth delay</p>
+    <br><br>
+    <div class="hover-target">Hover me!</div>
+  </div>
 
+  <script>
+    const cursor = document.getElementById('cursor');
+    let mouseX = 0, mouseY = 0;
+    let cursorX = 0, cursorY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    function animate() {
+      cursorX += (mouseX - cursorX) * 0.15;
+      cursorY += (mouseY - cursorY) * 0.15;
+      cursor.style.left = cursorX + 'px';
+      cursor.style.top = cursorY + 'px';
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    document.querySelectorAll('.hover-target, a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    });
+  </script>
+</body>
+</html>
