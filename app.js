@@ -29,10 +29,10 @@ const snippets = [
   top: 0;
   width: 26px;
   height: 26px;
-  border: 1.5px solid #7dff9b;
+  border: 1.5px solid #28ff0d;
   border-radius: 999px;
-  background: rgba(125, 255, 155, 0.18);
-  box-shadow: 0 0 28px rgba(125, 255, 155, 0.35);
+  background: rgba(40, 255, 13, 0.18);
+  box-shadow: 0 0 28px rgba(40, 255, 13, 0.35);
   pointer-events: none;
   z-index: 9999;
   transform: translate(-50%, -50%);
@@ -42,7 +42,7 @@ const snippets = [
 .snc-cursor.is-hover {
   width: 44px;
   height: 44px;
-  background: rgba(125, 255, 155, 0.28);
+  background: rgba(40, 255, 13, 0.28);
 }
 
 html,
@@ -107,18 +107,18 @@ document.querySelectorAll("a, button, [data-cursor-hover]").forEach((element) =>
   border: 0;
   border-radius: 14px;
   padding: 1rem 1.5rem;
-  background: linear-gradient(135deg, #7dff9b, #35d67b);
-  color: #ffffff;
+  background: linear-gradient(135deg, #28ff0d, #28ff0d);
+  color: #0171d3;
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.02em;
-  box-shadow: 0 0 24px rgba(125, 255, 155, 0.28);
+  box-shadow: 0 0 24px rgba(40, 255, 13, 0.28);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .snc-glow-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 36px rgba(125, 255, 155, 0.42);
+  box-shadow: 0 0 36px rgba(40, 255, 13, 0.42);
 }
 </style>
 
@@ -157,7 +157,7 @@ document.querySelectorAll("a, button, [data-cursor-hover]").forEach((element) =>
   height: 50px;
   border-radius: 999px;
   border: 4px solid rgba(255, 255, 255, 0.12);
-  border-top-color: #7dff9b;
+  border-top-color: #28ff0d;
   animation: snc-spin 1s linear infinite;
 }
 
@@ -227,7 +227,7 @@ document.querySelectorAll("a, button, [data-cursor-hover]").forEach((element) =>
   font-size: clamp(1rem, 2vw, 1.4rem);
   font-weight: 700;
   letter-spacing: 0.12em;
-  color: #7dff9b;
+  color: #28ff0d;
 }
 
 @keyframes snc-marquee {
@@ -274,8 +274,8 @@ document.querySelectorAll("a, button, [data-cursor-hover]").forEach((element) =>
   border: 0;
   border-radius: 14px;
   padding: 0.95rem 1.35rem;
-  background: linear-gradient(135deg, #7dff9b, #35d67b);
-  color: #ffffff;
+  background: linear-gradient(135deg, #28ff0d, #28ff0d);
+  color: #0171d3;
   font-weight: 700;
 }
 
@@ -386,14 +386,14 @@ sncModal.addEventListener("click", (event) => {
 
 .snc-parallax-bg[data-speed="0.28"] {
   background:
-    radial-gradient(circle at 30% 35%, rgba(125, 255, 155, 0.5), transparent 28%),
+    radial-gradient(circle at 30% 35%, rgba(40, 255, 13, 0.5), transparent 28%),
     linear-gradient(135deg, #151927, #090b11);
 }
 
 .snc-parallax-bg[data-speed="0.14"] {
   background:
     radial-gradient(circle at 70% 45%, rgba(255, 255, 255, 0.12), transparent 24%),
-    radial-gradient(circle at 60% 70%, rgba(125, 255, 155, 0.16), transparent 22%);
+    radial-gradient(circle at 60% 70%, rgba(40, 255, 13, 0.16), transparent 22%);
   mix-blend-mode: screen;
 }
 
@@ -527,10 +527,10 @@ sncObserver.observe(sncReveal);
   height: 52px;
   border: 0;
   border-radius: 999px;
-  background: linear-gradient(135deg, #7dff9b, #35d67b);
-  color: #ffffff;
+  background: linear-gradient(135deg, #28ff0d, #28ff0d);
+  color: #0171d3;
   font-size: 1.1rem;
-  box-shadow: 0 0 30px rgba(125, 255, 155, 0.35);
+  box-shadow: 0 0 30px rgba(40, 255, 13, 0.35);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.25s ease, transform 0.25s ease;
@@ -596,10 +596,8 @@ const elements = {
   mapFloatPanel: document.getElementById("mapFloatPanel"),
   mapFloatHeader: document.getElementById("mapFloatHeader"),
   mapFloatToggle: document.getElementById("mapFloatToggle"),
-  rotationViewport: document.getElementById("rotationViewport"),
-  rotationType: document.getElementById("rotationType"),
   rotationTitle: document.getElementById("rotationTitle"),
-  rotationSummary: document.getElementById("rotationSummary"),
+  rotationUse: document.getElementById("rotationUse"),
   rotationDots: document.getElementById("rotationDots"),
   rotationSelectBtn: document.getElementById("rotationSelectBtn")
 };
@@ -804,10 +802,8 @@ function renderRotation() {
   }
 
   const snippet = pool[state.rotationIndex];
-  elements.rotationViewport.innerHTML = renderThumb(snippet);
-  elements.rotationType.textContent = filterLabels[snippet.type];
   elements.rotationTitle.textContent = snippet.title;
-  elements.rotationSummary.textContent = snippet.summary;
+  elements.rotationUse.textContent = snippet.summary;
   elements.rotationDots.innerHTML = "";
 
   pool.forEach((item, index) => {
