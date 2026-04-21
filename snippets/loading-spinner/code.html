@@ -1,0 +1,48 @@
+<!-- ADD TO YOUR <style> -->
+<style>
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid #222;
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Variant: double color */
+.spinner-double {
+  border: 3px solid transparent;
+  border-top-color: #f472b6;
+  border-right-color: #f472b6;
+}
+
+/* Variant: pulse */
+.spinner-pulse {
+  position: relative;
+}
+
+.spinner-pulse::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  border: 3px solid transparent;
+  border-top-color: #22c55e;
+  border-radius: 50%;
+  animation: spin 1.2s linear infinite;
+}
+</style>
+
+
+<!-- ADD TO YOUR <body> where you want the spinner -->
+<div class="spinner"></div>
+
+<!-- Or use variants -->
+<div class="spinner spinner-double"></div>
+<div class="spinner spinner-pulse"></div>
