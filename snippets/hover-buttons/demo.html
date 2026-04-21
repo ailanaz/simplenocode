@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hover Button Demo</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at top, rgba(255, 122, 134, 0.18), transparent 28%),
+        linear-gradient(180deg, #10131a 0%, #090b10 100%);
+      color: #ffffff;
+      font-family: "Outfit", sans-serif;
+    }
+
+    .demo-shell {
+      width: min(100%, 420px);
+      padding: 26px;
+      border-radius: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+      text-align: center;
+    }
+
+    .eyebrow {
+      color: rgba(255, 255, 255, 0.68);
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 12px 0 0;
+      font-size: clamp(2rem, 8vw, 3.1rem);
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+    }
+
+    p {
+      margin: 12px 0 24px;
+      color: rgba(255, 255, 255, 0.72);
+      line-height: 1.65;
+    }
+  </style>
+</head>
+<body>
+  <main class="demo-shell">
+    <div class="eyebrow">Button Demo</div>
+    <h1>Soft neon CTA.</h1>
+    <p>Hover the button to see the lift and glow effect.</p>
+
+    <!-- SNIPPET:start -->
+    <style>
+      .snc-glow-btn {
+        border: 0;
+        border-radius: 14px;
+        padding: 1rem 1.5rem;
+        background: linear-gradient(135deg, #ff7a86, #ff5d6d);
+        color: #ffffff;
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        box-shadow: 0 0 24px rgba(255, 122, 134, 0.28);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .snc-glow-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 36px rgba(255, 122, 134, 0.42);
+      }
+    </style>
+
+    <button class="snc-glow-btn">Hover Me</button>
+    <!-- SNIPPET:end -->
+  </main>
+</body>
+</html>

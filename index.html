@@ -1,169 +1,123 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>SimpleNoCode</title>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;800&family=Space+Mono&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#F7F5F0;--card:#FFF;--text:#1A1A1A;--light:#6B6B6B;--accent:#FF6B4A;--teal:#4AEDC4;--border:#E8E4DD}
-body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text)}
-header{padding:1.5rem 2rem;display:flex;justify-content:space-between;border-bottom:2px solid var(--border)}
-.logo{font-size:1.5rem;font-weight:800;text-decoration:none}
-.logo span{color:var(--accent)}
-.tag{font-size:0.7rem;padding:0.25rem 0.6rem;background:var(--teal);border-radius:50px;font-weight:600}
-.hero{text-align:center;padding:4rem 1rem}
-.hero h1{font-size:clamp(2rem,6vw,3.5rem);margin-bottom:0.5rem}
-.hero h1 span{color:var(--accent)}
-.hero p{color:var(--light);font-size:1.1rem}
-.filters{display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;padding:1rem}
-.filter{padding:0.5rem 1rem;background:var(--card);border:2px solid var(--border);border-radius:50px;font-size:0.85rem;font-weight:600;cursor:pointer}
-.filter:hover,.filter.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-.snippets{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;max-width:1100px;margin:0 auto;padding:2rem}
-.card{background:var(--card);border:2px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;transition:all 0.3s}
-.card:hover{transform:translateY(-6px);border-color:var(--accent);box-shadow:0 15px 30px rgba(0,0,0,0.1)}
-.preview{height:140px;background:var(--bg);display:flex;align-items:center;justify-content:center;border-bottom:2px solid var(--border);position:relative;overflow:hidden}
-.preview-label{position:absolute;top:8px;left:8px;font-size:0.65rem;font-weight:600;color:var(--light);text-transform:uppercase;letter-spacing:1px}
-.card-body{padding:1rem}
-.card-title{font-size:1.1rem;font-weight:600;margin-bottom:0.25rem;display:flex;justify-content:space-between;align-items:center}
-.card-desc{color:var(--light);font-size:0.85rem;margin-bottom:0.75rem}
-.btn{display:inline-block;padding:0.5rem 1rem;background:var(--text);color:#fff;border-radius:6px;font-size:0.8rem;font-weight:600}
-.card:hover .btn{background:var(--accent)}
-.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:9999;align-items:center;justify-content:center;padding:1rem}
-.modal.show{display:flex}
-.modal-content{background:var(--card);border-radius:12px;max-width:600px;width:100%;max-height:80vh;overflow:auto}
-.modal-head{padding:1rem;border-bottom:2px solid var(--border);display:flex;justify-content:space-between}
-.modal-body{padding:1rem}
-pre{background:var(--bg);padding:1rem;border-radius:8px;overflow-x:auto;font-family:'Space Mono',monospace;font-size:0.75rem}
-.copier{display:block;width:100%;padding:0.75rem;background:var(--accent);color:#fff;border:none;border-radius:6px;font-size:0.9rem;font-weight:600;cursor:pointer;margin-top:0.5rem}
-footer{text-align:center;padding:2rem;border-top:2px solid var(--border);color:var(--light)}
-footer a{color:var(--accent);font-weight:600}
-@keyframes spin{to{transform:rotate(360deg)}}
-@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.btn-glow-demo:hover{box-shadow:0 0 25px rgba(102,126,234,0.6);transform:translateY(-2px)}
-@media(max-width:600px){.snippets{grid-template-columns:1fr;padding:1rem}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SimpleNoCode</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
 </head>
+<body>
+  <div class="page-shell">
+    <header class="topbar glass">
+      <a href="/" class="brand">Simple<span>NoCode</span></a>
+      <p class="topbar-copy">preview, test, and copy snippets in one workspace</p>
+      <div class="topbar-actions">
+        <div class="topbar-count" id="snippetCount">0 snippets</div>
+        <button class="topbar-button" id="randomSnippetBtn" type="button">Random Snippet</button>
+      </div>
+    </header>
 
-  <body>
-<header><a href="/" class="logo">Simple<span>NoCode</span></a><span class="tag">for non-coders</span></header>
+    <section class="hero glass">
+      <div class="hero-preview-col">
+        <div class="panel-label">Preview Lab</div>
+        <div class="preview-stage">
+          <iframe id="previewFrame" title="Snippet preview sandbox" loading="lazy"></iframe>
+        </div>
+        <div class="preview-meta">
+          <div class="hero-chip-row">
+            <span class="chip accent" id="heroTypeBadge">Snippet</span>
+            <button class="ghost-button small" id="reloadPreviewBtn" type="button">Reset Preview</button>
+          </div>
+          <h1 id="heroTitle">Choose a snippet and test it live.</h1>
+          <p id="heroSummary">The selected snippet renders here so it can be previewed before you paste it into your own project.</p>
+        </div>
+      </div>
 
-<section class="hero">
-<h1>Copy-paste UI for <span>non-coders</span></h1>
-<p>See effects live, then copy the code. No build tools, just paste and go.</p>
-</section>
+      <div class="hero-code-col">
+        <div class="panel-bar">
+          <div>
+            <div class="panel-label">Copy Ready Code</div>
+            <p class="panel-caption" id="codeCaption">Load a snippet to see its HTML, CSS, and JavaScript.</p>
+          </div>
+          <button class="action-button" id="copyCodeBtn" type="button">Copy Code</button>
+        </div>
+        <pre class="code-block"><code id="codeBlock"></code></pre>
+      </div>
 
-<div class="filters">
-<span class="filter active" data-f="all">All</span>
-<span class="filter" data-f="cursor">Cursor</span>
-<span class="filter" data-f="text">Text</span>
-<span class="filter" data-f="scroll">Scroll</span>
-<span class="filter" data-f="buttons">Buttons</span>
-<span class="filter" data-f="loaders">Loaders</span>
-<span class="filter" data-f="ui">UI</span>
-</div>
+      <aside class="hero-guide-col">
+        <div class="info-card">
+          <div class="panel-label">Snippet Description</div>
+          <p class="info-copy" id="snippetDescription">Each selection updates this panel with context about what the snippet does and why you would use it.</p>
+        </div>
+        <div class="info-card">
+          <div class="panel-label">How To Paste</div>
+          <ol class="usage-list" id="usageList"></ol>
+        </div>
+        <div class="info-card">
+          <div class="panel-label">Works Best For</div>
+          <p class="info-copy accent-copy" id="bestFor">Landing pages, polished interactions, and no-code builds that still need a custom feel.</p>
+        </div>
+      </aside>
+    </section>
 
-<section class="snippets">
+    <main class="library">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">Snippet Library</div>
+          <h2>Browse by type</h2>
+        </div>
+        <p class="section-meta" id="filterMeta">Showing all snippets</p>
+      </div>
 
-<div class="card" data-f="cursor" onclick="show('cursor-follower')">
-<div class="preview"><span class="preview-label">Move cursor</span>
-<div style="width:18px;height:18px;background:var(--accent);border-radius:50%;animation:pulse 1.5s infinite;"></div>
-</div>
-<div class="card-body"><div class="card-title">Cursor Follower <span class="tag">Cursor</span></div>
-<p class="card-desc">Circle trails behind your cursor</p><span class="btn">Get Code →</span></div>
-</div>
+      <div class="chip-filters" id="filters"></div>
+      <section class="cards-grid" id="cardsGrid" aria-live="polite"></section>
+    </main>
+  </div>
 
-<div class="card" data-f="text" onclick="show('text-reveal')">
-<div class="preview"><span class="preview-label">On scroll</span>
-<div style="font-weight:600;animation:fadeIn 2s forwards;">Hello! 👋</div>
-</div>
-<div class="card-body"><div class="card-title">Text Reveal <span class="tag">Text</span></div>
-<p class="card-desc">Fade in when scrolling</p><span class="btn">Get Code →</span></div>
-</div>
+  <div class="map-float glass" id="mapFloatPanel">
+    <div class="map-float-header" id="mapFloatHeader">
+      <span>Snippet Rotation</span>
+      <span id="mapFloatToggle">▲</span>
+    </div>
+    <div class="map-float-body" id="mapFloatBody">
+      <div class="rotation-frame-wrap">
+        <div class="rotation-viewport" id="rotationViewport"></div>
+        <div class="rotation-overlay">
+          <span class="rotation-chip" id="rotationType">Cursor</span>
+          <strong id="rotationTitle">Cursor Follower</strong>
+          <p id="rotationSummary">Auto-rotating snippet spotlight.</p>
+        </div>
+      </div>
+      <div class="rotation-footer">
+        <div class="rotation-dots" id="rotationDots"></div>
+        <button class="ghost-button small" id="rotationSelectBtn" type="button">Load In Lab</button>
+      </div>
+    </div>
+  </div>
 
-<div class="card" data-f="text" onclick="show('marquee')">
-<div class="preview"><span class="preview-label">Auto-scroll</span>
-<div style="display:flex;animation:marquee 6s linear infinite;white-space:nowrap;"><span style="font-weight:600;">✨ Design → Develop → Deploy ✨</span></div>
-</div>
-<div class="card-body"><div class="card-title">Marquee Text <span class="tag">Text</span></div>
-<p class="card-desc">Horizontal scrolling banner</p><span class="btn">Get Code →</span></div>
-</div>
+  <template id="cardTemplate">
+    <article class="snippet-card">
+      <div class="card-thumb">
+        <div class="card-thumb-inner" data-role="thumb"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-topline">
+          <span class="chip" data-role="type-chip"></span>
+          <span class="card-tag" data-role="copy-size"></span>
+        </div>
+        <h3 data-role="title"></h3>
+        <p class="card-summary" data-role="summary"></p>
+        <div class="card-actions">
+          <button class="action-button secondary" data-role="load-btn" type="button">Preview Snippet</button>
+          <button class="ghost-button small" data-role="copy-btn" type="button">Copy</button>
+        </div>
+      </div>
+    </article>
+  </template>
 
-<div class="card" data-f="buttons" onclick="show('buttons')">
-<div class="preview"><span class="preview-label">Hover me</span>
-<button class="btn-glow-demo" style="padding:0.5rem 1.2rem;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;border-radius:6px;">Hover Me!</button>
-</div>
-<div class="card-body"><div class="card-title">Hover Buttons <span class="tag">Buttons</span></div>
-<p class="card-desc">Polished button effects</p><span class="btn">Get Code →</span></div>
-</div>
-
-<div class="card" data-f="loaders" onclick="show('spinner')">
-<div class="preview"><span class="preview-label">Loading...</span>
-<div style="width:25px;height:25px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite;"></div>
-</div>
-<div class="card-body"><div class="card-title">Loading Spinner <span class="tag">Loaders</span></div>
-<p class="card-desc">Smooth animated spinner</p><span class="btn">Get Code →</span></div>
-</div>
-
-<div class="card" data-f="scroll" onclick="show('parallax')">
-<div class="preview" style="position:relative;"><span class="preview-label">Scroll</span>
-<div style="position:absolute;width:100%;height:120%;background:linear-gradient(135deg,#1a1a2e,#16213e);opacity:0.2;"></div>
-<div style="position:relative;z-index:1;font-weight:600;">Parallax!</div>
-</div>
-<div class="card-body"><div class="card-title">Parallax Scroll <span class="tag">Scroll</span></div>
-<p class="card-desc">Background moves slower</p><span class="btn">Get Code →</span></div>
-</div>
-
-<div class="card" data-f="ui" onclick="show('modal')">
-<div class="preview"><span class="preview-label">Click</span>
-<button style="padding:0.5rem 1.2rem;background:var(--accent);color:#fff;border:none;border-radius:6px;cursor:pointer;">Open</button>
-</div>
-<div class="card-body"><div class="card-title">Modal Popup <span class="tag">UI</span></div>
-<p class="card-desc">Pop-up dialog box</p><span class="btn">Get Code →</span></div>
-</div>
-
-<div class="card" data-f="ui" onclick="show('scrolltop')">
-<div class="preview" style="position:relative;"><span class="preview-label">Scroll ↓</span>
-<div style="position:absolute;bottom:10px;right:10px;width:24px;height:24px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold;font-size:0.8rem;">↑</div>
-</div>
-<div class="card-body"><div class="card-title">Scroll to Top <span class="tag">UI</span></div>
-<p class="card-desc">Button on scroll down</p><span class="btn">Get Code →</span></div>
-</div>
-
-</section>
-
-<footer><p>🎨 Built for non-coders. Free forever. <a href="#">Submit a snippet →</a></p></footer>
-
-<div class="modal" id="M">
-<div class="modal-content">
-<div class="modal-head"><h3 id="T">Title</h3><button onclick="hide()" style="background:none;border:none;font-size:1.5rem;cursor:pointer;">×</button></div>
-<div class="modal-body"><pre id="C"></pre><button class="copier" onclick="copy()">📋 Copy Code</button></div>
-</div>
-</div>
-
-<style>@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}@keyframes fadeIn{0%{opacity:0;transform:translateY(10px)}100%{opacity:1;transform:translateY(0)}}</style>
-
-<script>
-var S={cursor:'<style>.cursor{width:30px;height:30px;border:2px solid #fff;border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference}.cursor.hover{width:50px;background:rgba(255,255,255,0.15)}body,body a,body button{cursor:none}</style>\n<div class="cursor" id="c"></div>\n<script>\nlet mx=0,my=0,cx=0,cy=0;\ndocument.onmousemove=e=>{mx=e.clientX;my=e.clientY};\n(function anim(){\ncx+=(mx-cx)*0.15;cy+=(my-cy)*0.15;\nc.style.left=cx+"px";c.style.top=cy+"px";\nrequestAnimationFrame(anim)})();\ndocument.querySelectorAll("a,button").forEach(e=>{\ne.onmouseenter=()=>c.classList.add("hover");\ne.onmouseleave=()=>c.classList.remove("hover")});\n<\/script>',
-text:'<style>.reveal{opacity:0;transform:translateY(30px);transition:all 0.8s}.reveal.v{opacity:1;transform:translateY(0)}</style>\n<div class="reveal">Your text</div>\n<script>\nnew IntersectionObserver(e=>e.forEach(t=>{if(t.isIntersecting)t.target.classList.add("v")}))\n.observe(document.querySelector(".reveal"));\n<\/script>',
-marquee:'<style>.marquee{overflow:hidden;background:#1a1a1a;padding:1.5rem 0}.marquee-in{display:flex;animation:marquee 20s linear infinite}.marquee-in span{color:#fff;font-size:1.5rem;font-weight:600;margin-right:2rem}@keyframes marquee{to{transform:translateX(-50%)}}</style>\n<div class="marquee"><div class="marquee-in"><span>✨ Design</span><span>→</span><span>Develop</span><span>→</span><span>Deploy</span><span>✨ Design</span><span>→</span><span>Develop</span><span>→</span><span>Deploy</span></div></div>',
-buttons:'<style>.btn-glow{padding:1rem 2rem;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;border-radius:8px;cursor:pointer;transition:all 0.3s}.btn-glow:hover{box-shadow:0 0 30px rgba(102,126,234,0.5);transform:translateY(-2px)}</style>\n<button class="btn-glow">Hover Me!</button>',
-spinner:'<style>.spinner{width:50px;height:50px;border:3px solid #222;border-top-color:#FF6B4A;border-radius:50%;animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}</style>\n<div class="spinner"></div>',
-parallax:'<style>.parallax{height:60vh;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}.parallax-bg{position:absolute;top:0;left:0;width:100%;height:120%;background:linear-gradient(135deg,#1a1a2e,#16213e);z-index:0}.parallax-txt{position:relative;z-index:1;color:#fff}</style>\n<div class="parallax"><div class="parallax-bg" data-spd="0.5"></div><div class="parallax-txt"><h2>Title</h2></div></div>\n<script>\nwindow.onscroll=()=>{\nlet s=pageYOffset;\ndocument.querySelectorAll(".parallax-bg").forEach(b=>{\nb.style.transform="translateY("+(s*(b.dataset.spd||0.5))+"px)"})};\n<\/script>',
-modal:'<style>.modal-o{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:9999;align-items:center;justify-content:center}.modal-o.show{display:flex}.modal-b{background:#1a1a1a;padding:2rem;border-radius:12px;max-width:500px}</style>\n<button onclick="document.getElementById(\'m\').classList.add(\'show\')">Open</button>\n<div class="modal-o" id="m"><div class="modal-b"><h2>Modal</h2><p>Content</p><button onclick="this.closest(\'.modal-o\').classList.remove(\'show\')">Close</button></div></div>',
-scrolltop:'<style>.stt{position:fixed;bottom:2rem;right:2rem;width:50px;height:50px;background:#FF6B4A;color:#fff;border:none;border-radius:50%;font-size:1.5rem;cursor:pointer;opacity:0;transition:opacity 0.3s}.stt.show{opacity:1}</style>\n<button class="stt" id="stt" onclick="scrollTo({top:0,behavior:\'smooth\'})">↑</button>\n<script>\nwindow.onscroll=()=>{document.getElementById("stt").classList.toggle("show",scrollY>300)};\n<\/script>'};
-
-document.querySelectorAll(".filter").forEach(b=>b.onclick=()=>{
-document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));
-b.classList.add("active");
-let f=b.dataset.f;
-document.querySelectorAll(".card").forEach(c=>c.style.display=(f==="all"||c.dataset.f===f)?"block":"none");
-});
-
-function show(id){document.getElementById("T").innerText=S[id].split("<")[0];document.getElementById("C").innerText=S[id];document.getElementById("M").classList.add("show")}
-function hide(){document.getElementById("M").classList.remove("show")}
-function copy(){navigator.clipboard.writeText(document.getElementById("C").innerText);document.querySelector(".copier").innerText="✅ Copied!";setTimeout(()=>document.querySelector(".copier").innerText="📋 Copy Code",2000)}
-document.getElementById("M").onclick=e=>{if(e.target.id==="M")hide()}
-</script>
+  <script src="./app.js"></script>
 </body>
 </html>
