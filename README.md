@@ -1,10 +1,10 @@
 # SimpleNoCode
-
-A free library of copy-paste UI snippets for non-coders. Add polished effects to your website — no coding required.
+Copy-paste UI snippets for non-coders.
+A free library of copy-paste UI snippets for non-coders. Add polished effects to your website - no coding required.
 
 ## What Is This?
 
-You see a cool effect on a website but don't know how to add it? We curate simple, drop-in snippets — no build tools, no npm, just copy and paste.
+You see a cool effect on a website but don't know how to add it? We curate simple, drop-in snippets - no build tools, no npm, just copy and paste.
 
 ## How to Use
 
