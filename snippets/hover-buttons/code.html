@@ -1,0 +1,65 @@
+<!-- ADD TO YOUR <style> -->
+<style>
+.btn {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Glow Button */
+.btn-glow {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+}
+
+.btn-glow:hover {
+  box-shadow: 0 0 30px rgba(102, 126, 234, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Fill Button */
+.btn-fill {
+  background: transparent;
+  color: #fff;
+  border: 2px solid #fff;
+}
+
+.btn-fill:hover {
+  background: #fff;
+  color: #111;
+}
+
+/* Slide Button */
+.btn-slide {
+  background: #222;
+  color: #fff;
+  border: 1px solid #333;
+}
+
+.btn-slide::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-slide:hover::before {
+  left: 100%;
+}
+</style>
+
+
+<!-- ADD TO YOUR <body> -->
+<button class="btn btn-glow">Glow Effect</button>
+<button class="btn btn-fill">Fill Effect</button>
+<button class="btn btn-slide">Slide Effect</button>
