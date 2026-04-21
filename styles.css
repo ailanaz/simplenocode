@@ -573,7 +573,7 @@ a { color: inherit; text-decoration: none; }
   width: 48px;
   height: 48px;
   border-radius: 999px;
-  background: radial-gradient(circle at 35% 35%, #c8e6d4 0%, #5aaf82 32%, #1a6640 75%);
+  background: radial-gradient(circle at 35% 35%, #c8e6d4 0%, #5aaf82 40%, #1a6640 100%);
   box-shadow: 0 0 22px rgba(26, 102, 64, 0.28);
   animation: thumb-float 4s ease-in-out infinite;
 }
