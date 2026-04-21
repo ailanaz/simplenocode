@@ -11,7 +11,7 @@
 </head>
 <body>
   <div class="page-shell">
-    <header class="topbar glass">
+    <header class="topbar">
       <a href="/" class="brand">Simple<span>NoCode</span></a>
       <p class="topbar-copy">preview, test, and copy snippets in one workspace</p>
       <div class="topbar-actions">
@@ -20,7 +20,31 @@
       </div>
     </header>
 
-    <section class="hero glass">
+    <section class="preview-section" id="previewSection">
+      <div class="preview-section-head">
+        <div>
+          <div class="panel-label">Preview Lab</div>
+          <p class="panel-caption preview-caption">Test the selected snippet here before copying it into your project. <a href="#copy-ready-code" class="copy-code-link">Copy code</a></p>
+        </div>
+      </div>
+      <div class="preview-stage">
+        <iframe id="previewFrame" title="Snippet preview sandbox" loading="lazy"></iframe>
+      </div>
+    </section>
+
+    <main class="library">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">Snippet Library</div>
+          <h2>Browse by type</h2>
+        </div>
+        <p class="section-meta" id="filterMeta">Showing all snippets</p>
+      </div>
+      <div class="chip-filters" id="filters"></div>
+      <section class="cards-grid" id="cardsGrid" aria-live="polite"></section>
+    </main>
+
+    <section class="hero" id="copy-ready-code">
       <div class="hero-code-col">
         <div class="panel-bar">
           <div>
@@ -31,7 +55,6 @@
         </div>
         <pre class="code-block"><code id="codeBlock"></code></pre>
       </div>
-
       <aside class="hero-details-col">
         <div class="info-card hero-intro-card">
           <div class="hero-chip-row">
@@ -40,7 +63,6 @@
           <h1 id="heroTitle">Choose a snippet and test it live.</h1>
           <p id="heroSummary">The selected snippet renders here so it can be previewed before you paste it into your own project.</p>
         </div>
-
         <div class="info-card hero-details-stack">
           <div class="detail-block">
             <div class="panel-label">Snippet Description</div>
@@ -57,38 +79,12 @@
         </div>
       </aside>
     </section>
-
-    <section class="preview-section glass" id="previewSection">
-      <div class="preview-section-head">
-        <div>
-          <div class="panel-label">Preview Lab</div>
-          <p class="panel-caption preview-caption">Test the selected snippet here before copying it into your project.</p>
-        </div>
-        <button class="ghost-button small" id="reloadPreviewBtn" type="button">Reset Preview</button>
-      </div>
-      <div class="preview-stage">
-        <iframe id="previewFrame" title="Snippet preview sandbox" loading="lazy"></iframe>
-      </div>
-    </section>
-
-    <main class="library">
-      <div class="section-heading">
-        <div>
-          <div class="eyebrow">Snippet Library</div>
-          <h2>Browse by type</h2>
-        </div>
-        <p class="section-meta" id="filterMeta">Showing all snippets</p>
-      </div>
-
-      <div class="chip-filters" id="filters"></div>
-      <section class="cards-grid" id="cardsGrid" aria-live="polite"></section>
-    </main>
   </div>
 
-  <div class="map-float glass" id="mapFloatPanel">
+  <div class="map-float" id="mapFloatPanel">
     <div class="map-float-header" id="mapFloatHeader">
       <span>Snippet Rotation</span>
-      <span id="mapFloatToggle">▲</span>
+      <span id="mapFloatToggle">&#9650;</span>
     </div>
     <div class="map-float-body" id="mapFloatBody">
       <div class="rotation-frame-wrap">
