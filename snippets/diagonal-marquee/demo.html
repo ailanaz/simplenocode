@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagonal Marquee Demo</title>
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; background: radial-gradient(circle at top, rgba(26,102,64,0.14), transparent 28%), linear-gradient(180deg, #f9fafb, #eef7f0); font-family: "Outfit", sans-serif; color: #111820; display: flex; flex-direction: column; align-items: center; }
+.demo-intro { max-width: 480px; padding: 40px 24px 20px; text-align: center; }
+.eyebrow { color: #4a5a55; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; }
+h1 { margin: 10px 0 0; font-size: clamp(1.8rem, 6vw, 2.6rem); line-height: 0.98; letter-spacing: -0.05em; }
+p { margin: 10px 0 0; color: #4a5a55; line-height: 1.65; font-size: 0.95rem; }
+.snc-bands { position: relative; width: 100%; overflow: hidden; padding: 80px 0; pointer-events: none; }
+.snc-band { position: absolute; left: -10%; width: 120%; background: #111820; padding: 18px 0; display: flex; overflow: hidden; }
+.snc-band-top { top: 30px; transform: rotate(-6deg); }
+.snc-band-bottom { top: 80px; transform: rotate(6deg); }
+.snc-band-track { display: flex; gap: 2rem; white-space: nowrap; animation: snc-marquee-left 14s linear infinite; }
+.snc-band-bottom .snc-band-track { animation: snc-marquee-right 14s linear infinite; }
+.snc-band-track span { font-size: 1.4rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: transparent; -webkit-text-stroke: 1.5px #5aaf82; }
+@keyframes snc-marquee-left { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes snc-marquee-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+</style></head>
+<body>
+<div class="demo-intro"><div class="eyebrow">Marquee Demo</div><h1>Diagonal bands.</h1><p>Two ticker strips scrolling in opposite directions at opposing angles.</p></div>
+<div class="snc-bands">
+  <div class="snc-band snc-band-top"><div class="snc-band-track"><span>DESIGN</span><span>&#8594;</span><span>DEVELOP</span><span>&#8594;</span><span>DEPLOY</span><span>&#8594;</span><span>DESIGN</span><span>&#8594;</span><span>DEVELOP</span><span>&#8594;</span><span>DEPLOY</span><span>&#8594;</span></div></div>
+  <div class="snc-band snc-band-bottom"><div class="snc-band-track"><span>DESIGN</span><span>&#8594;</span><span>DEVELOP</span><span>&#8594;</span><span>DEPLOY</span><span>&#8594;</span><span>DESIGN</span><span>&#8594;</span><span>DEVELOP</span><span>&#8594;</span><span>DEPLOY</span><span>&#8594;</span></div></div>
+</div>
+</body></html>
