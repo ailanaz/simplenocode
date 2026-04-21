@@ -60,7 +60,7 @@ a { color: inherit; text-decoration: none; }
 .brand span { color: var(--accent); }
 
 .brand-logo {
-  height: 44px;
+  height: 56px;
   width: auto;
   display: block;
   object-fit: contain;
