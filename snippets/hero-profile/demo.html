@@ -1,1 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero Section Demo</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(ellipse at center, #fafafa 0%, #e8e8e8 50%, #f5e6e0 100%);
+      font-family: "Outfit", sans-serif;
+      color: #111820;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .demo-intro {
+      max-width: 480px;
+      padding: 40px 24px 20px;
+      text-align: center;
+    }
+    .eyebrow {
+      color: #4a5a55;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 10px 0 0;
+      font-size: clamp(1.8rem, 6vw, 3.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.05em;
+    }
+    p {
+      margin: 10px 0 0;
+      color: #4a5a55;
+      line-height: 1.65;
+      font-size: 0.95rem;
+    }
+    .hero-name {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      background: #ddd;
+    }
+    .name-text {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    .hero-title {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    .hero-title .mobile { display: inline; }
+    .hero-title .web { display: inline; }
+    .hero-title .dev {
+      display: inline-block;
+      animation: fadeIn 0.5s ease;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .hero-tagline {
+      font-size: 1.25rem;
+      color: #666;
+      margin-bottom: 2rem;
+    }
+    .pill-container {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .pill {
+      position: relative;
+      width: 200px;
+      height: 60px;
+      border-radius: 30px;
+      overflow: hidden;
+      background: #000;
+    }
+    .pill-inner {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .pill:nth-child(2) .pill-inner {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+    .pill img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      animation: slideImg 8s linear infinite;
+    }
+    .pill:nth-child(2) img {
+      animation-direction: reverse;
+    }
+    @keyframes slideImg {
+      0% { transform: translateX(-20%); }
+      100% { transform: translateX(20%); }
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-intro">
+    <div class="eyebrow">Hero Demo</div>
+    <h1>Profile + animated pills.</h1>
+    <p>Profile photo inline, two dark pill shapes with scrolling thumbnails, subtle radial gradient background.</p>
+  </div>
 
+  <div class="hero-name">
+    <img src="" alt="Profile" class="avatar">
+    <span class="name-text">Your Name</span>
+  </div>
+
+  <h1 class="hero-title">
+    <span class="mobile">Mobile</span>&amp;<span class="web">Web</span><br>
+    <span class="dev">Developer</span>
+  </h1>
+
+  <p class="hero-tagline">Turning ideas into real-world products.</p>
+
+  <div class="pill-container">
+    <div class="pill"><div class="pill-inner"></div></div>
+    <div class="pill"><div class="pill-inner"></div></div>
+  </div>
+</body>
+</html>
