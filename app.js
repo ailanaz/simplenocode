@@ -513,7 +513,7 @@ const VIEW_STATE_KEY = "simplenocode:view";
 
 const state = { filter: "all", selectedId: snippets[0].id, rotationIndex: 0, rotationTimer: null, mapCollapsed: false };
 
-const elements = { snippetCount: document.getElementById("snippetCount"), randomSnippetBtn: document.getElementById("randomSnippetBtn"), previewSection: document.getElementById("previewSection"), previewFrame: document.getElementById("previewFrame"), heroTypeBadge: document.getElementById("heroTypeBadge"), heroTitle: document.getElementById("heroTitle"), heroSummary: document.getElementById("heroSummary"), codeCaption: document.getElementById("codeCaption"), copyCodeBtn: document.getElementById("copyCodeBtn"), codeBlock: document.getElementById("codeBlock"), snippetDescription: document.getElementById("snippetDescription"), usageList: document.getElementById("usageList"), bestFor: document.getElementById("bestFor"), filterMeta: document.getElementById("filterMeta"), filters: document.getElementById("filters"), cardsGrid: document.getElementById("cardsGrid"), cardTemplate: document.getElementById("cardTemplate"), mapFloatPanel: document.getElementById("mapFloatPanel"), mapFloatHeader: document.getElementById("mapFloatHeader"), mapFloatToggle: document.getElementById("mapFloatToggle"), rotationTitle: document.getElementById("rotationTitle"), rotationUse: document.getElementById("rotationUse"), rotationDots: document.getElementById("rotationDots"), rotationSelectBtn: document.getElementById("rotationSelectBtn") };
+const elements = { snippetCount: document.getElementById("snippetCount"), randomSnippetBtn: document.getElementById("randomSnippetBtn"), filterMeta: document.getElementById("filterMeta"), filters: document.getElementById("filters"), cardsGrid: document.getElementById("cardsGrid"), cardTemplate: document.getElementById("cardTemplate"), mapFloatPanel: document.getElementById("mapFloatPanel"), mapFloatHeader: document.getElementById("mapFloatHeader"), mapFloatToggle: document.getElementById("mapFloatToggle"), rotationTitle: document.getElementById("rotationTitle"), rotationUse: document.getElementById("rotationUse"), rotationDots: document.getElementById("rotationDots"), rotationSelectBtn: document.getElementById("rotationSelectBtn") };
 
 function getSnippetById(id) { return snippets.find((s) => s.id === id); }
 function getVisibleSnippets() { if (state.filter === "all") { return snippets; } return snippets.filter((s) => s.type === state.filter); }
@@ -522,6 +522,14 @@ function pluralize(word, count) { return count === 1 ? word : word + "s"; }
 function previewSrc(snippet) { return snippet.demo + "?v=" + Date.now(); }
 function renderThumb(snippet) { if (snippet.thumb) { return '<img class="card-thumb-image" src="' + snippet.thumb + '" alt="' + snippet.title + ' thumbnail">'; } return snippet.fallback; }
 function flashButton(button, nextLabel) { const orig = button.dataset.originalLabel || button.textContent; button.dataset.originalLabel = orig; button.textContent = nextLabel; window.setTimeout(() => { button.textContent = orig; }, 1800); }
+function renderUsageList(list, steps) {
+  list.innerHTML = "";
+  steps.forEach((step) => {
+    const li = document.createElement("li");
+    li.textContent = step;
+    list.appendChild(li);
+  });
+}
 
 function saveViewState() {
   try {
@@ -588,23 +596,33 @@ function renderCards() {
   elements.cardsGrid.innerHTML = "";
   visible.forEach((snippet) => {
     const node = elements.cardTemplate.content.firstElementChild.cloneNode(true);
+    const isSelected = snippet.id === state.selectedId;
     node.dataset.snippetId = snippet.id;
-    node.classList.toggle("is-selected", snippet.id === state.selectedId);
+    node.classList.toggle("is-selected", isSelected);
+    node.tabIndex = 0;
+    node.setAttribute("role", "button");
+    node.setAttribute("aria-expanded", isSelected ? "true" : "false");
     node.querySelector("[data-role='thumb']").innerHTML = renderThumb(snippet);
     node.querySelector("[data-role='type-chip']").textContent = filterLabels[snippet.type];
     node.querySelector("[data-role='title']").textContent = snippet.title;
     node.querySelector("[data-role='summary']").textContent = snippet.summary;
     node.querySelector("[data-role='copy-size']").textContent = lineCount(snippet.code) + " lines";
+    node.querySelector("[data-role='load-btn']").textContent = isSelected ? "Active Card" : "Open Card";
 
     node.addEventListener("click", () => {
-      selectSnippet(snippet.id);
+      if (!isSelected) { selectSnippet(snippet.id); }
+    });
+    node.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        if (!isSelected) { selectSnippet(snippet.id); }
+      }
     });
 
     const loadButton = node.querySelector("[data-role='load-btn']");
     loadButton.addEventListener("click", (event) => {
       event.stopPropagation();
-      selectSnippet(snippet.id);
-      elements.previewSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (!isSelected) { selectSnippet(snippet.id); }
     });
 
     const copyButton = node.querySelector("[data-role='copy-btn']");
@@ -613,13 +631,21 @@ function renderCards() {
       await copySnippet(snippet, copyButton);
     });
 
-    elements.cardsGrid.appendChild(node);
-  });
-}
+    if (isSelected) {
+      node.querySelector("[data-role='preview-frame']").src = previewSrc(snippet);
+      node.querySelector("[data-role='code-caption']").textContent = filterLabels[snippet.type] + " snippet \u2022 " + lineCount(snippet.code) + " lines ready to paste";
+      node.querySelector("[data-role='code-block']").textContent = snippet.code.trim();
+      node.querySelector("[data-role='description']").textContent = snippet.description;
+      node.querySelector("[data-role='best-for']").textContent = snippet.bestFor;
+      renderUsageList(node.querySelector("[data-role='usage-list']"), snippet.usage);
+      const expandedCopyButton = node.querySelector("[data-role='copy-expanded-btn']");
+      expandedCopyButton.addEventListener("click", async (event) => {
+        event.stopPropagation();
+        await copySnippet(snippet, expandedCopyButton);
+      });
+    }
 
-function updateCardSelection() {
-  document.querySelectorAll(".snippet-card").forEach((card) => {
-    card.classList.toggle("is-selected", card.dataset.snippetId === state.selectedId);
+    elements.cardsGrid.appendChild(node);
   });
 }
 
@@ -629,25 +655,11 @@ function updateFilterMeta() {
   elements.filterMeta.textContent = "Showing " + visible.length + " " + filterLabels[state.filter].toLowerCase() + " " + pluralize("snippet", visible.length);
 }
 
-function renderUsage(steps) {
-  elements.usageList.innerHTML = "";
-  steps.forEach((step) => { const li = document.createElement("li"); li.textContent = step; elements.usageList.appendChild(li); });
-}
-
 function selectSnippet(id, options = {}) {
   const snippet = getSnippetById(id);
   if (!snippet) { return; }
   state.selectedId = id;
-  elements.heroTypeBadge.textContent = filterLabels[snippet.type];
-  elements.heroTitle.textContent = snippet.title;
-  elements.heroSummary.textContent = snippet.summary;
-  elements.codeCaption.textContent = filterLabels[snippet.type] + " snippet \u2022 " + lineCount(snippet.code) + " lines ready to paste";
-  elements.codeBlock.textContent = snippet.code.trim();
-  elements.snippetDescription.textContent = snippet.description;
-  elements.bestFor.textContent = snippet.bestFor;
-  renderUsage(snippet.usage);
-  elements.previewFrame.src = previewSrc(snippet);
-  updateCardSelection();
+  renderCards();
   if (options.syncRotation !== false) {
     const pool = getVisibleSnippets();
     const poolIndex = pool.findIndex((item) => item.id === id);
@@ -662,10 +674,9 @@ function setFilter(key) {
   const visible = getVisibleSnippets();
   if (!visible.some((s) => s.id === state.selectedId) && visible[0]) { state.selectedId = visible[0].id; }
   renderFilters();
-  renderCards();
   updateFilterMeta();
-  selectSnippet(state.selectedId, { syncRotation: false });
   state.rotationIndex = 0;
+  selectSnippet(state.selectedId, { syncRotation: false });
   renderRotation();
   saveViewState();
 }
@@ -714,17 +725,13 @@ function pickRandomSnippet() {
 
 function bindEvents() {
   elements.randomSnippetBtn.addEventListener("click", pickRandomSnippet);
-  elements.copyCodeBtn.addEventListener("click", async () => {
-    const snippet = getSnippetById(state.selectedId);
-    if (!snippet) { return; }
-    await copySnippet(snippet, elements.copyCodeBtn);
-  });
   elements.rotationSelectBtn.addEventListener("click", () => {
     const pool = getVisibleSnippets();
     const snippet = pool[state.rotationIndex];
     if (!snippet) { return; }
     selectSnippet(snippet.id);
-    if (elements.previewSection) { elements.previewSection.scrollIntoView({ behavior: "smooth", block: "start" }); }
+    const selectedCard = elements.cardsGrid.querySelector('[data-snippet-id="' + snippet.id + '"]');
+    if (selectedCard) { selectedCard.scrollIntoView({ behavior: "smooth", block: "start" }); }
   });
   elements.mapFloatHeader.addEventListener("click", toggleRotationPanel);
   elements.mapFloatPanel.addEventListener("mouseenter", stopRotation);
@@ -735,7 +742,6 @@ function init() {
   loadViewState();
   updateSnippetCount();
   renderFilters();
-  renderCards();
   updateFilterMeta();
   selectSnippet(state.selectedId, { syncRotation: false });
   renderRotation();

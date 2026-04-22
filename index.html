@@ -20,65 +20,17 @@
       </div>
     </header>
 
-    <section class="preview-section" id="previewSection">
-      <div class="preview-section-head">
-        <div>
-          <div class="panel-label">Preview Lab</div>
-          <p class="panel-caption preview-caption">Test the selected snippet here before copying it into your project. <a href="#copy-ready-code" class="copy-code-link">Copy code</a></p>
-        </div>
-      </div>
-      <div class="preview-stage">
-        <iframe id="previewFrame" title="Snippet preview sandbox" loading="lazy"></iframe>
-      </div>
-    </section>
-
     <main class="library">
       <div class="section-heading">
         <div>
-          <div class="eyebrow">Snippet Library</div>
-          <h2>Browse by type</h2>
+          <div class="eyebrow">No Code Copy Library</div>
+          <h2>Preview Lab</h2>
         </div>
         <p class="section-meta" id="filterMeta">Showing all snippets</p>
       </div>
       <div class="chip-filters" id="filters"></div>
       <section class="cards-grid" id="cardsGrid" aria-live="polite"></section>
     </main>
-
-    <section class="hero" id="copy-ready-code">
-      <div class="hero-code-col">
-        <div class="panel-bar">
-          <div>
-            <div class="panel-label">Copy Ready Code</div>
-            <p class="panel-caption" id="codeCaption">Load a snippet to see its HTML, CSS, and JavaScript.</p>
-          </div>
-          <button class="action-button" id="copyCodeBtn" type="button">Copy Code</button>
-        </div>
-        <pre class="code-block"><code id="codeBlock"></code></pre>
-      </div>
-      <aside class="hero-details-col">
-        <div class="info-card hero-intro-card">
-          <div class="hero-chip-row">
-            <span class="chip accent" id="heroTypeBadge">Snippet</span>
-          </div>
-          <h1 id="heroTitle">Choose a snippet and test it live.</h1>
-          <p id="heroSummary">The selected snippet renders here so it can be previewed before you paste it into your own project.</p>
-        </div>
-        <div class="info-card hero-details-stack">
-          <div class="detail-block">
-            <div class="panel-label">Snippet Description</div>
-            <p class="info-copy" id="snippetDescription">Each selection updates this panel with context about what the snippet does and why you would use it.</p>
-          </div>
-          <div class="detail-block">
-            <div class="panel-label">How To Paste</div>
-            <ol class="usage-list" id="usageList"></ol>
-          </div>
-          <div class="detail-block">
-            <div class="panel-label">Works Best For</div>
-            <p class="info-copy accent-copy" id="bestFor">Landing pages, polished interactions, and no-code builds that still need a custom feel.</p>
-          </div>
-        </div>
-      </aside>
-    </section>
   </div>
 
   <div class="map-float" id="mapFloatPanel">
@@ -96,7 +48,7 @@
       </div>
       <div class="rotation-footer">
         <div class="rotation-dots" id="rotationDots"></div>
-        <button class="ghost-button small" id="rotationSelectBtn" type="button">Load In Lab</button>
+        <button class="ghost-button small" id="rotationSelectBtn" type="button">Open Card</button>
       </div>
     </div>
   </div>
@@ -114,8 +66,49 @@
         <h3 data-role="title"></h3>
         <p class="card-summary" data-role="summary"></p>
         <div class="card-actions">
-          <button class="action-button secondary" data-role="load-btn" type="button">Preview Snippet</button>
+          <button class="action-button secondary" data-role="load-btn" type="button">Open Card</button>
           <button class="ghost-button small" data-role="copy-btn" type="button">Copy</button>
+        </div>
+      </div>
+      <div class="card-expanded" data-role="expanded">
+        <div class="card-expanded-grid">
+          <div class="card-preview-panel">
+            <div class="panel-bar card-panel-bar">
+              <div>
+                <div class="panel-label">Preview And Test</div>
+                <p class="panel-caption">Interact with the live snippet directly inside this card.</p>
+              </div>
+            </div>
+            <div class="card-preview-stage">
+              <iframe data-role="preview-frame" title="Snippet preview sandbox" loading="lazy"></iframe>
+            </div>
+          </div>
+          <div class="card-side-stack">
+            <div class="card-code-panel">
+              <div class="panel-bar card-panel-bar">
+                <div>
+                  <div class="panel-label">Copy Ready Code</div>
+                  <p class="panel-caption" data-role="code-caption">Load a snippet to see its HTML, CSS, and JavaScript.</p>
+                </div>
+                <button class="action-button" data-role="copy-expanded-btn" type="button">Copy Code</button>
+              </div>
+              <pre class="card-code-block"><code data-role="code-block"></code></pre>
+            </div>
+            <div class="info-card card-info-panel">
+              <div class="detail-block">
+                <div class="panel-label">Snippet Description</div>
+                <p class="info-copy" data-role="description"></p>
+              </div>
+              <div class="detail-block">
+                <div class="panel-label">How To Paste</div>
+                <ol class="usage-list" data-role="usage-list"></ol>
+              </div>
+              <div class="detail-block">
+                <div class="panel-label">Works Best For</div>
+                <p class="info-copy accent-copy" data-role="best-for"></p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </article>
