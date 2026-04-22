@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Testimonials Demo</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #efffe8;
+      font-family: "Outfit", sans-serif;
+      color: #111820;
+      display: flex;
+      flex-direction: column;
+    }
+    .demo-intro {
+      max-width: 480px;
+      padding: 40px 24px 20px;
+      text-align: center;
+      margin: 0 auto;
+    }
+    .eyebrow {
+      color: #4a5a55;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 10px 0 0;
+      font-size: clamp(1.8rem, 6vw, 2.6rem);
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+    }
+    p {
+      margin: 10px 0 0;
+      color: #4a5a55;
+      line-height: 1.65;
+      font-size: 0.95rem;
+    }
+    .testimonials {
+      padding: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+    .testi-card {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    }
+    .testi-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .testi-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .testi-info h4 {
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+    .testi-info span {
+      color: #666;
+      font-size: 0.875rem;
+    }
+    .testi-quote {
+      font-size: 1.5rem;
+      color: #e5e5e5;
+      line-height: 0.5;
+      margin-bottom: 1rem;
+    }
+    .testi-card p {
+      color: #444;
+      line-height: 1.7;
+      font-style: italic;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-intro">
+    <div class="eyebrow">Testimonials Demo</div>
+    <h1>Client testimonials.</h1>
+    <p>2-column card grid with circular avatar photos and styled quote marks.</p>
+  </div>
+  <div class="testimonials">
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-quote">"</div>
+        <div class="testi-header">
+          <div class="testi-avatar"></div>
+          <div class="testi-info">
+            <h4>Sarah Johnson</h4>
+            <span>CEO, TechStart</span>
+          </div>
+        </div>
+        <p>Delivered our project on time and exceeded expectations. The attention to detail was incredible.</p>
+      </div>
+      <div class="testi-card">
+        <div class="testi-quote">"</div>
+        <div class="testi-header">
+          <div class="testi-avatar"></div>
+          <div class="testi-info">
+            <h4>Mike Chen</h4>
+            <span>Founder, AppLabs</span>
+          </div>
+        </div>
+        <p>Best developer I've worked with. Clear communication, clean code, and professional.</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
