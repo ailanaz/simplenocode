@@ -509,7 +509,9 @@ const snippets = [ { id: "cursor-follower", title: "Cursor Follower", type: "cur
 
 const filterLabels = { all: "All", cursor: "Cursor", text: "Text", scroll: "Scroll", buttons: "Buttons", loaders: "Loaders", ui: "UI" };
 
-const state = { filter: "all", selectedId: snippets[0].id, rotationIndex: 0, rotationTimer: null };
+const VIEW_STATE_KEY = "simplenocode:view";
+
+const state = { filter: "all", selectedId: snippets[0].id, rotationIndex: 0, rotationTimer: null, mapCollapsed: false };
 
 const elements = { snippetCount: document.getElementById("snippetCount"), randomSnippetBtn: document.getElementById("randomSnippetBtn"), previewSection: document.getElementById("previewSection"), previewFrame: document.getElementById("previewFrame"), heroTypeBadge: document.getElementById("heroTypeBadge"), heroTitle: document.getElementById("heroTitle"), heroSummary: document.getElementById("heroSummary"), codeCaption: document.getElementById("codeCaption"), copyCodeBtn: document.getElementById("copyCodeBtn"), codeBlock: document.getElementById("codeBlock"), snippetDescription: document.getElementById("snippetDescription"), usageList: document.getElementById("usageList"), bestFor: document.getElementById("bestFor"), filterMeta: document.getElementById("filterMeta"), filters: document.getElementById("filters"), cardsGrid: document.getElementById("cardsGrid"), cardTemplate: document.getElementById("cardTemplate"), mapFloatPanel: document.getElementById("mapFloatPanel"), mapFloatHeader: document.getElementById("mapFloatHeader"), mapFloatToggle: document.getElementById("mapFloatToggle"), rotationTitle: document.getElementById("rotationTitle"), rotationUse: document.getElementById("rotationUse"), rotationDots: document.getElementById("rotationDots"), rotationSelectBtn: document.getElementById("rotationSelectBtn") };
 
@@ -520,6 +522,42 @@ function pluralize(word, count) { return count === 1 ? word : word + "s"; }
 function previewSrc(snippet) { return snippet.demo + "?v=" + Date.now(); }
 function renderThumb(snippet) { if (snippet.thumb) { return '<img class="card-thumb-image" src="' + snippet.thumb + '" alt="' + snippet.title + ' thumbnail">'; } return snippet.fallback; }
 function flashButton(button, nextLabel) { const orig = button.dataset.originalLabel || button.textContent; button.dataset.originalLabel = orig; button.textContent = nextLabel; window.setTimeout(() => { button.textContent = orig; }, 1800); }
+
+function saveViewState() {
+  try {
+    window.sessionStorage.setItem(VIEW_STATE_KEY, JSON.stringify({
+      filter: state.filter,
+      selectedId: state.selectedId,
+      rotationIndex: state.rotationIndex,
+      mapCollapsed: state.mapCollapsed
+    }));
+  } catch (error) {}
+}
+
+function loadViewState() {
+  try {
+    const raw = window.sessionStorage.getItem(VIEW_STATE_KEY);
+    if (!raw) { return; }
+    const saved = JSON.parse(raw);
+    const nextFilter = saved.filter === "all" || snippets.some((snippet) => snippet.type === saved.filter) ? saved.filter : state.filter;
+    const visible = nextFilter === "all" ? snippets : snippets.filter((snippet) => snippet.type === nextFilter);
+    state.filter = nextFilter;
+    if (visible.some((snippet) => snippet.id === saved.selectedId)) {
+      state.selectedId = saved.selectedId;
+    } else if (visible[0]) {
+      state.selectedId = visible[0].id;
+    }
+    if (Number.isInteger(saved.rotationIndex) && saved.rotationIndex >= 0) {
+      state.rotationIndex = saved.rotationIndex;
+    }
+    state.mapCollapsed = Boolean(saved.mapCollapsed);
+  } catch (error) {}
+}
+
+function applyPanelState() {
+  elements.mapFloatPanel.classList.toggle("collapsed", state.mapCollapsed);
+  elements.mapFloatToggle.textContent = state.mapCollapsed ? "\u25BC" : "\u25B2";
+}
 
 async function copyText(text) {
   if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(text); return; }
@@ -559,9 +597,7 @@ function renderCards() {
     node.querySelector("[data-role='copy-size']").textContent = lineCount(snippet.code) + " lines";
 
     node.addEventListener("click", () => {
-      state.selectedId = snippet.id;
-      elements.previewFrame.src = previewSrc(snippet);
-      updateCardSelection();
+      selectSnippet(snippet.id);
     });
 
     const loadButton = node.querySelector("[data-role='load-btn']");
@@ -618,6 +654,7 @@ function selectSnippet(id, options = {}) {
     if (poolIndex >= 0) { state.rotationIndex = poolIndex; }
     renderRotation();
   }
+  saveViewState();
 }
 
 function setFilter(key) {
@@ -630,6 +667,7 @@ function setFilter(key) {
   selectSnippet(state.selectedId, { syncRotation: false });
   state.rotationIndex = 0;
   renderRotation();
+  saveViewState();
 }
 
 function renderRotation() {
@@ -663,8 +701,9 @@ function startRotation() {
 function stopRotation() { if (state.rotationTimer) { window.clearInterval(state.rotationTimer); state.rotationTimer = null; } }
 
 function toggleRotationPanel() {
-  const collapsed = elements.mapFloatPanel.classList.toggle("collapsed");
-  elements.mapFloatToggle.textContent = collapsed ? "\u25BC" : "\u25B2";
+  state.mapCollapsed = elements.mapFloatPanel.classList.toggle("collapsed");
+  elements.mapFloatToggle.textContent = state.mapCollapsed ? "\u25BC" : "\u25B2";
+  saveViewState();
 }
 
 function pickRandomSnippet() {
@@ -693,14 +732,17 @@ function bindEvents() {
 }
 
 function init() {
+  loadViewState();
   updateSnippetCount();
   renderFilters();
   renderCards();
   updateFilterMeta();
   selectSnippet(state.selectedId, { syncRotation: false });
   renderRotation();
+  applyPanelState();
   bindEvents();
   startRotation();
+  saveViewState();
 }
 
 init();
